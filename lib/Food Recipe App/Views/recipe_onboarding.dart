@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_design/Food%20Recipe%20App/Colors/color.dart';
+import 'package:flutter_ui_design/Food%20Recipe%20App/Views/home_screen_recipe.dart';
 
 class RecipeOnboarding extends StatefulWidget {
   const RecipeOnboarding({super.key});
@@ -64,12 +65,20 @@ class _RecipeOnboardingState extends State<RecipeOnboarding> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: (){},
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreenRecipe(),
+                        ),
+                      );
+                    },
                     child: Container(
                       height: 55,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: gradinet),
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: gradinet,
+                      ),
                       child: const Center(
                         child: Text(
                           "Get Started",
