@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import 'package:flutter_ui_design/Food%20Recipe%20App/models/ingredients.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../models/recipe_model.dart';
 
 class ItemsDetailsScreen extends StatefulWidget {
@@ -131,7 +132,7 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30,),
+                      const SizedBox(height: 30),
                       Row(
                         children: [
                           Column(
@@ -141,17 +142,17 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black
+                                  color: Colors.black,
                                 ),
                               ),
-                              const SizedBox(height: 2,),
+                              const SizedBox(height: 2),
                               Text(
                                 "1 Bowl (${widget.recipeItems.weight}g)",
                                 style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.black45,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           const Spacer(),
@@ -164,13 +165,152 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                           ),
                         ],
                       ),
-
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyProgressIndicatorValue(
+                            name: "Carbs",
+                            amount: "${widget.recipeItems.carb} g",
+                            percentage: "(56%)",
+                            color: Colors.green,
+                            data: 0.4,
+                          ),
+                          MyProgressIndicatorValue(
+                            color: Colors.red,
+                            name: 'Fat',
+                            amount: '${widget.recipeItems.fat} g',
+                            percentage: '(72%)',
+                            data: 0.6,
+                          ),
+                          MyProgressIndicatorValue(
+                            color: Colors.orange,
+                            name: 'Protein',
+                            amount: '${widget.recipeItems.protein} g',
+                            percentage: '(8%)',
+                            data: 0.2,
+                          ),
+                          MyProgressIndicatorValue(
+                            color: Colors.green,
+                            name: 'Calories',
+                            amount: '${widget.recipeItems.calorie} kkal',
+                            percentage: "",
+                            data: 0.7,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 25),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Ingredients",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            "See all",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.green,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(
+                          ingredients.length,
+                          (index) => Column(
+                            children: [
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: ingredients[index].color,
+                                child: Image.asset(
+                                  ingredients[index].image,
+                                  height: 40,
+                                  width: 40,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                ingredients[index].name,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black38,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyProgressIndicatorValue extends StatelessWidget {
+  final String? name, amount;
+  final String percentage;
+  final Color color;
+  final double data;
+  const MyProgressIndicatorValue({
+    super.key,
+    required this.name,
+    required this.amount,
+    required this.percentage,
+    required this.color,
+    required this.data,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CircularPercentIndicator(
+      radius: 20,
+      circularStrokeCap: CircularStrokeCap.round,
+      percent: data,
+      lineWidth: 7,
+      reverse: true,
+      backgroundColor: color.withOpacity(0.2),
+      animation: true,
+      animationDuration: 500,
+      restartAnimation: true,
+      progressColor: color,
+      header: Padding(
+        padding: const EdgeInsets.only(bottom: 5),
+        child: Text(
+          name!,
+          style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 12),
+        ),
+      ),
+      footer: Padding(
+        padding: const EdgeInsets.only(top: 5),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '$amount ',
+                style: const TextStyle(color: Colors.black, fontSize: 12),
+              ),
+              TextSpan(
+                text: percentage,
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
