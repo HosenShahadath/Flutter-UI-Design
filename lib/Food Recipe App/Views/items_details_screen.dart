@@ -251,6 +251,40 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                 ),
               ),
             ),
+            Positioned(
+                bottom: size.height * 0.5,
+                child: ClipPath(
+              clipper: MyClipper(),
+                  child: Container(
+                    height: 70,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      color: Colors.white
+                    ),
+                  ),
+                ),
+            ),
+            Positioned(
+              bottom: size.height * 0.48,
+              right: 30,
+              child: Container(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade200,
+                      spreadRadius: 5,
+                    ),
+                  ],
+                  color: widget.recipeItems.fav ? Colors.red : Colors.black45,
+                ),
+                child: const Icon(
+                  Icons.heart_broken,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -315,4 +349,18 @@ class MyProgressIndicatorValue extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyClipper extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size){
+    var path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(0, size.height, 0, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
