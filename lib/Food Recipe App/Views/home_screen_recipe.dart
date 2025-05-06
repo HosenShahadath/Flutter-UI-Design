@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_design/Food%20Recipe%20App/Colors/color.dart';
+import 'package:flutter_ui_design/Food%20Recipe%20App/Views/items_details_screen.dart';
 import 'package:flutter_ui_design/Food%20Recipe%20App/models/categories_recipe.dart';
 import 'package:flutter_ui_design/Food%20Recipe%20App/models/recipe_model.dart';
 import 'package:iconsax/iconsax.dart';
@@ -66,7 +67,16 @@ class _HomeScreenRecipeState extends State<HomeScreenRecipe> {
                             ? const EdgeInsets.only(left: 20, right: 10)
                             : const EdgeInsets.only(right: 10),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    ItemsDetailsScreen(recipeItems: recipe),
+                          ),
+                        );
+                      },
                       child: Container(
                         height: 260,
                         width: MediaQuery.of(context).size.width / 2.45,
